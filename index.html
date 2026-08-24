@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌸 Laboratório de Informática - Cute Inventory v2.1</title>
+    <title>🌸 Laboratório de Informática - Cute Dashboard</title>
     <link rel="preconnect" href="https://googleapis.com">
     <link rel="preconnect" href="https://gstatic.com" crossorigin>
     <link href="https://googleapis.com/css2?family=Fredoka:wght@300..700&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
@@ -11,7 +11,7 @@
 </head>
 <body>
 
-    <header class="app-header">
+    <header class="app-header animate-pop">
         <div class="header-content">
             <span class="header-icon">🎒</span>
             <div class="header-text">
@@ -19,11 +19,11 @@
                 <p>Gerenciamento delicado de equipamentos e periféricos</p>
             </div>
         </div>
-        <button id="theme-toggle" class="btn-theme" title="Alternar Modo Escuro">✨ 🌙</button>
+        <button id="theme-toggle" class="btn-theme" type="button" title="Alternar Modo Escuro">✨ 🌙</button>
     </header>
 
     <!-- 📊 CARDS DE ESTATÍSTICAS -->
-    <section class="metrics-container">
+    <section class="metrics-container animate-fade">
         <div class="card-metric total">
             <h3>💻 Total</h3>
             <p id="total-itens">0</p>
@@ -44,7 +44,7 @@
 
     <main class="main-layout">
         <!-- 📝 FORMULÁRIO DE CADASTRO / EDIÇÃO -->
-        <section class="panel form-panel">
+        <section class="panel form-panel animate-fade">
             <h2 id="form-title"><span>✏️</span> Novo Registro</h2>
             <form id="form-inventario">
                 <input type="hidden" id="edit-id">
@@ -87,12 +87,12 @@
         </section>
 
         <!-- 🔎 TABELA E FILTROS -->
-        <section class="panel table-panel">
+        <section class="panel table-panel animate-fade">
             <div class="table-header-actions">
                 <h2><span>📂</span> Itens Cadastrados</h2>
                 <div class="action-row">
-                    <input type="text" id="search-input" placeholder="🔍 Pesquisar por nome ou código...">
-                    <button id="btn-export" class="btn-export" title="Exportar Planilha Excel/CSV">📥 Exportar</button>
+                    <input type="text" id="search-input" placeholder="🔍 Pesquisar por nome...">
+                    <button id="btn-export" class="btn-export" type="button" title="Exportar Planilha Excel/CSV">📥 Exportar</button>
                 </div>
             </div>
 
@@ -117,7 +117,7 @@
     </main>
 
     <!-- 📜 ABA DE HISTÓRICO / LOGS -->
-    <section class="panel logs-panel">
+    <section class="panel logs-panel animate-fade">
         <h2><span>📜</span> Histórico de Atividades Recentes</h2>
         <ul id="log-list" class="log-list">
             <li class="empty-log">Nenhuma atividade registrada ainda... ✨</li>
@@ -131,13 +131,17 @@
             <h3 id="modal-title">Confirmar Ação</h3>
             <p id="modal-message">Você tem certeza que deseja fazer isso?</p>
             <div class="modal-buttons">
-                <button id="modal-btn-confirm" class="btn-modal-confirm">Sim, tenho! ✨</button>
-                <button id="modal-btn-cancel" class="btn-modal-cancel">Cancelar 🎀</button>
+                <button id="modal-btn-confirm" class="btn-modal-confirm" type="button">Sim, tenho! ✨</button>
+                <button id="modal-btn-cancel" class="btn-modal-cancel" type="button">Cancelar 🎀</button>
             </div>
         </div>
     </div>
 
+    <!-- 🍞 RECIPIENTE DE NOTIFICAÇÕES (NOVO) -->
+    <div id="toast-container" class="toast-container"></div>
+
     <script src="script.js"></script>
 </body>
 </html>
+
 
