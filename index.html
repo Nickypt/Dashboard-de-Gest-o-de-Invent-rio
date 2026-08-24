@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌸 Laboratório de Informática - Cute Inventory</title>
+    <!-- Fontes fofas e modernas do Google Fonts -->
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Fredoka:wght@300..700&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="app-header">
+        <div class="header-content">
+            <span class="header-icon">🎒</span>
+            <div>
+                <h1>Inventário do Laboratório</h1>
+                <p>Gerenciamento delicado de equipamentos e periféricos</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- 📊 CARDS DE ESTATÍSTICAS (NOVOS) -->
+    <section class="metrics-container">
+        <div class="card-metric total">
+            <h3>💻 Total</h3>
+            <p id="total-itens">0</p>
+        </div>
+        <div class="card-metric ativo">
+            <h3>✨ Ativos</h3>
+            <p id="total-ativos">0</p>
+        </div>
+        <div class="card-metric manutencao">
+            <h3>🔧 Manutenção</h3>
+            <p id="total-manutencao">0</p>
+        </div>
+        <div class="card-metric inativo">
+            <h3>💤 Inativos</h3>
+            <p id="total-inativos">0</p>
+        </div>
+    </section>
+
+    <main class="main-layout">
+        <!-- 📝 FORMULÁRIO DE CADASTRO -->
+        <section class="panel form-panel">
+            <h2><span>✏️</span> Novo Registro</h2>
+            <form id="form-inventario">
+                <div class="field-group">
+                    <label for="nome">Nome do Equipamento</label>
+                    <input type="text" id="nome" required placeholder="Ex: Teclado Mecânico Rosa">
+                </div>
+
+                <div class="field-group">
+                    <label for="patrimonio">Código de Tombamento</label>
+                    <input type="text" id="patrimonio" required placeholder="Ex: LAB-2026-X">
+                </div>
+
+                <div class="field-row">
+                    <div class="field-group">
+                        <label for="categoria">Categoria</label>
+                        <select id="categoria" required>
+                            <option value="" disabled selected>Escolha...</option>
+                            <option value="Computador">🖥️ Computador</option>
+                            <option value="Periférico">🖱️ Periférico</option>
+                            <option value="Rede">🌐 Rede</option>
+                        </select>
+                    </div>
+
+                    <div class="field-group">
+                        <label for="status">Status</label>
+                        <select id="status" required>
+                            <option value="" disabled selected>Escolha...</option>
+                            <option value="Ativo">Pronto p/ Uso</option>
+                            <option value="Em Manutenção">Em Reparo</option>
+                            <option value="Inativo">Desativado</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit">Salvar no Sistema ✨</button>
+            </form>
+        </section>
+
+        <!-- 🔎 TABELA E BUSCA -->
+        <section class="panel table-panel">
+            <div class="table-header-actions">
+                <h2><span>📂</span> Itens Cadastrados</h2>
+                <!-- Barra de Pesquisa Avançada -->
+                <input type="text" id="search-input" placeholder="🔍 Pesquisar por nome ou código...">
+            </div>
+
+            <div class="scrollable-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Identificador</th>
+                            <th>Equipamento</th>
+                            <th>Categoria</th>
+                            <th>Estado</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="lista-tabela">
+                        <!-- Gerado dinamicamente pelo JS -->
+                    </tbody>
+                </table>
+                <div id="empty-state" class="empty-state">
+                    <p>🌸 Nenhum equipamento encontrado por aqui...</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
