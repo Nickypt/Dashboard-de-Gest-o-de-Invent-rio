@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌸 Laboratório de Informática - Cute Inventory v2</title>
+    <title>🌸 Laboratório de Informática - Cute Inventory v2.1</title>
     <link rel="preconnect" href="https://googleapis.com">
     <link rel="preconnect" href="https://gstatic.com" crossorigin>
     <link href="https://googleapis.com/css2?family=Fredoka:wght@300..700&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
@@ -20,7 +19,6 @@
                 <p>Gerenciamento delicado de equipamentos e periféricos</p>
             </div>
         </div>
-        <!-- 🌓 BOTÃO DARK MODE -->
         <button id="theme-toggle" class="btn-theme" title="Alternar Modo Escuro">✨ 🌙</button>
     </header>
 
@@ -49,7 +47,6 @@
         <section class="panel form-panel">
             <h2 id="form-title"><span>✏️</span> Novo Registro</h2>
             <form id="form-inventario">
-                <!-- Campo Oculto para controlar se estamos EDITANDO um item -->
                 <input type="hidden" id="edit-id">
 
                 <div class="field-group">
@@ -95,7 +92,6 @@
                 <h2><span>📂</span> Itens Cadastrados</h2>
                 <div class="action-row">
                     <input type="text" id="search-input" placeholder="🔍 Pesquisar por nome ou código...">
-                    <!-- 📥 BOTÃO EXPORTAR -->
                     <button id="btn-export" class="btn-export" title="Exportar Planilha Excel/CSV">📥 Exportar</button>
                 </div>
             </div>
@@ -128,7 +124,7 @@
         </ul>
     </section>
 
-    <!-- 🪟 MODAL CUSTOMIZADO (SUBSTITUTO DO CONFIRM FEIO) -->
+    <!-- 🪟 MODAL CUSTOMIZADO -->
     <div id="custom-modal" class="modal-overlay">
         <div class="modal-card">
             <div class="modal-icon">🌸</div>
@@ -144,3 +140,4 @@
     <script src="script.js"></script>
 </body>
 </html>
+
