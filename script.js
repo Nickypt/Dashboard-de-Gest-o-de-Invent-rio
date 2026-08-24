@@ -1,9 +1,9 @@
-// 📦 Estado da Aplicação
+// 📦 Estado da Aplicação limpo e seguro
 let inventario = JSON.parse(localStorage.getItem('tech_cute_inventory')) || [];
 let logs = JSON.parse(localStorage.getItem('tech_cute_logs')) || [];
-let callbackModal = null; // Guardará o que fazer quando o modal for confirmado
+let callbackModal = null; 
 
-// 🎯 Seleção de Elementos
+// 🎯 Seleção de Elementos do DOM
 const form = document.getElementById('form-inventario');
 const editIdInput = document.getElementById('edit-id');
 const formTitle = document.getElementById('form-title');
@@ -14,7 +14,7 @@ const searchInput = document.getElementById('search-input');
 const emptyState = document.getElementById('empty-state');
 const logList = document.getElementById('log-list');
 
-// Estatísticas
+// Elementos de Estatísticas
 const totalItensEl = document.getElementById('total-itens');
 const totalAtivosEl = document.getElementById('total-ativos');
 const totalManutencaoEl = document.getElementById('total-manutencao');
@@ -28,18 +28,18 @@ const modalBtnConfirm = document.getElementById('modal-btn-confirm');
 const modalBtnCancel = document.getElementById('modal-btn-cancel');
 const themeToggle = document.getElementById('theme-toggle');
 
-// 🚀 Inicialização
+// 🚀 Inicialização Perfeita da Página
 document.addEventListener('DOMContentLoaded', () => {
-    // Carrega tema salvo
     const temaSalvo = localStorage.getItem('cute_theme') || 'light';
     document.documentElement.setAttribute('data-theme', temaSalvo);
     themeToggle.textContent = temaSalvo === 'light' ? '✨ 🌙' : '✨ ☀️';
     
+    // Atualiza as telas de forma limpa
     renderApp();
     renderLogs();
 });
 
-// 🌓 Alternar Modo Escuro / Claro
+// 🌓 Alternador Inteligente do Modo Escuro
 themeToggle.addEventListener('click', () => {
     const atual = document.documentElement.getAttribute('data-theme');
     const novoTema = atual === 'light' ? 'dark' : 'light';
@@ -49,7 +49,7 @@ themeToggle.addEventListener('click', () => {
     registrarLog(`Mudou o visual do painel para o modo ${novoTema === 'light' ? 'Claro' : 'Escuro'} 🎨`);
 });
 
-// ✨ Criar ou Editar Registro (Submit do Form)
+// ✨ Processador Unificado (Cadastro / Atualização sem Bugs)
 form.addEventListener('submit', function(e) {
     e.preventDefault();
 
@@ -60,15 +60,17 @@ form.addEventListener('submit', function(e) {
     const status = document.getElementById('status').value;
 
     if (idEdicao) {
-        // Modo Edição (UPDATE)
-        const itemIndex = inventario.findIndex(i => i.id === idEdicao);
-        if (itemIndex > -1) {
-            inventario[itemIndex] = { id: idEdicao, nome, patrimonio, categoria, status };
-            registrarLog(`Modificou as propriedades do item: "${nome}" ✏️`);
-        }
+        // Mapeia e atualiza mantendo a posição e IDs originais intactos
+        inventario = inventario.map(item => {
+            if (item.id === idEdicao) {
+                return { id: idEdicao, nome, patrimonio, categoria, status };
+            }
+            return item;
+        });
+        registrarLog(`Modificou as propriedades do item: "${nome}" ✏️`);
         encerrarModoEdicao();
     } else {
-        // Modo Cadastro (CREATE)
+        // Cadastro Normal
         const novoEquipamento = {
             id: 'EQ-' + Date.now().toString().slice(-6),
             nome, patrimonio, categoria, status
@@ -80,9 +82,10 @@ form.addEventListener('submit', function(e) {
     sincronizarStorage();
     renderApp();
     form.reset();
+    searchInput.value = ''; // Limpa busca antiga para exibir o item novo
 });
 
-// ✏️ Ativar Modo Edição no Formulário
+// ✏️ Preparador de Edição seguro
 function prepararEdicao(id) {
     const item = inventario.find(i => i.id === id);
     if (!item) return;
@@ -97,8 +100,7 @@ function prepararEdicao(id) {
     btnSubmit.textContent = "Atualizar Dados ✨";
     btnCancelEdit.style.display = 'block';
     
-    // Rola a tela suavemente para o formulário no mobile
-    form.scrollIntoView({ behavior: 'smooth' });
+    window.scrollTo({ top: form.offsetTop - 20, behavior: 'smooth' });
 }
 
 btnCancelEdit.addEventListener('click', encerrarModoEdicao);
@@ -111,7 +113,7 @@ function encerrarModoEdicao() {
     btnCancelEdit.style.display = 'none';
 }
 
-// 🪟 Gerenciador de Modais Customizados (Substitutos de alerts/confirms)
+// 🪟 Controlador Interno do Modal Fofo
 function mostrarModal(titulo, mensagem, acaoConfirmar) {
     modalTitle.textContent = titulo;
     modalMessage.textContent = mensagem;
@@ -131,8 +133,13 @@ function fecharModal() {
     callbackModal = null;
 }
 
-// 🗑️ Operação de Exclusão usando Modal Customizado
+// 🗑️ Operador de Remoção Limpo
 function deletarItem(id) {
+    // Se o item deletado for o mesmo que está sendo editado no momento, fecha o painel de edição
+    if (editIdInput.value === id) {
+        encerrarModoEdicao();
+    }
+
     const item = inventario.find(i => i.id === id);
     const nomeItem = item ? item.nome : 'o equipamento';
 
@@ -148,13 +155,14 @@ function deletarItem(id) {
     );
 }
 
-// 🔍 Filtro em tempo real
+// 🔍 Evento de Input Sanitizado para Pesquisa
 searchInput.addEventListener('input', function(e) {
-    renderApp(e.target.value.toLowerCase());
+    renderApp(e.target.value.toLowerCase().trim());
 });
 
-// 🔄 Renderizador da Tabela e Estatísticas
+// 🔄 Atualizador Geral Inteligente da Interface e Contadores
 function renderApp(filtro = '') {
+    // Filtragem à prova de falhas por minúsculas
     const dadosFiltrados = inventario.filter(item => 
         item.nome.toLowerCase().includes(filtro) || 
         item.patrimonio.toLowerCase().includes(filtro)
@@ -185,22 +193,22 @@ function renderApp(filtro = '') {
         });
     }
 
-    // Contadores
+    // Recalcula contadores a partir da base principal (Evita bugs de sumiço ao filtrar)
     totalItensEl.textContent = inventario.length;
     totalAtivosEl.textContent = inventario.filter(i => i.status === 'Ativo').length;
     totalManutencaoEl.textContent = inventario.filter(i => i.status === 'Em Manutenção').length;
     totalInativosEl.textContent = inventario.filter(i => i.status === 'Inativo').length;
 }
 
-// 📜 Gerenciamento de Histórico (Logs)
+// 📜 Painel de Histórico Robusto
 function registrarLog(texto) {
     const agora = new Date();
     const horaFormatada = agora.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
     
     const novoLog = `[${horaFormatada}] ${texto}`;
-    logs.unshift(novoLog); // Adiciona no início da lista
+    logs.unshift(novoLog); 
 
-    if(logs.length > 20) logs.pop(); // Limita em 20 registros
+    if (logs.length > 20) logs.pop(); 
 
     localStorage.setItem('tech_cute_logs', JSON.stringify(logs));
     renderLogs();
@@ -208,7 +216,7 @@ function registrarLog(texto) {
 
 function renderLogs() {
     logList.innerHTML = '';
-    if(logs.length === 0) {
+    if (logs.length === 0) {
         logList.innerHTML = `<li class="empty-log">Nenhuma atividade registrada ainda... ✨</li>`;
         return;
     }
@@ -220,22 +228,20 @@ function renderLogs() {
     });
 }
 
-// 📥 Exportação de Dados para Excel/CSV Reais
+// 📥 Exportação Higienizada para Planilhas CSV
 document.getElementById('btn-export').addEventListener('click', () => {
-    if(inventario.length === 0) {
+    if (inventario.length === 0) {
         mostrarModal("🌸 Opa!", "Não existem dados disponíveis para exportação no momento.", null);
         return;
     }
 
-    // Cabeçalho do arquivo CSV
+    // Configura o delimitador correto para Excel ler automaticamente na América Latina (Separador por Ponto e Vírgula)
     let csvContent = "\uFEFFPatrimonio;Nome;Categoria;Status\n";
 
-    // Mapeia e insere as linhas
     inventario.forEach(item => {
         csvContent += `"${item.patrimonio}";"${item.nome}";"${item.categoria}";"${item.status}"\n`;
     });
 
-    // Criação do link invisível para download do arquivo gerado
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
@@ -248,8 +254,9 @@ document.getElementById('btn-export').addEventListener('click', () => {
     registrarLog(`Exportou a lista de registros em arquivo .CSV 📥`);
 });
 
-// 💾 Sincronização Geral
+// 💾 Persistência
 function sincronizarStorage() {
     localStorage.setItem('tech_cute_inventory', JSON.stringify(inventario));
 }
+
 
