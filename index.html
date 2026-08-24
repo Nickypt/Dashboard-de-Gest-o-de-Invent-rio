@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌸 Laboratório de Informática - Cute Dashboard</title>
+    <title>🌸 Laboratório de Informática - Cute Dashboard Pro</title>
     <link rel="preconnect" href="https://googleapis.com">
     <link rel="preconnect" href="https://gstatic.com" crossorigin>
     <link href="https://googleapis.com/css2?family=Fredoka:wght@300..700&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
@@ -11,6 +11,7 @@
 </head>
 <body>
 
+    <!-- CABEÇALHO -->
     <header class="app-header animate-pop">
         <div class="header-content">
             <span class="header-icon">🎒</span>
@@ -19,31 +20,51 @@
                 <p>Gerenciamento delicado de equipamentos e periféricos</p>
             </div>
         </div>
-        <button id="theme-toggle" class="btn-theme" type="button" title="Alternar Modo Escuro">✨ 🌙</button>
+        <button id="theme-toggle" class="btn-theme" type="button">✨ 🌙</button>
     </header>
 
-    <!-- 📊 CARDS DE ESTATÍSTICAS -->
-    <section class="metrics-container animate-fade">
-        <div class="card-metric total">
-            <h3>💻 Total</h3>
-            <p id="total-itens">0</p>
-        </div>
-        <div class="card-metric ativo">
-            <h3>✨ Ativos</h3>
-            <p id="total-ativos">0</p>
-        </div>
-        <div class="card-metric manutencao">
-            <h3>🔧 Manutenção</h3>
-            <p id="total-manutencao">0</p>
-        </div>
-        <div class="card-metric inativo">
-            <h3>💤 Inativos</h3>
-            <p id="total-inativos">0</p>
-        </div>
-    </section>
+    <!-- CONTAINER DE INDICADORES (MÉTRICAS + GRÁFICO DONUT) -->
+    <div class="dashboard-top-grid animate-fade">
+        <!-- CARDS DE ESTATÍSTICAS -->
+        <section class="metrics-container">
+            <div class="card-metric total">
+                <h3>💻 Total</h3>
+                <p id="total-itens">0</p>
+            </div>
+            <div class="card-metric ativo">
+                <h3>✨ Ativos</h3>
+                <p id="total-ativos">0</p>
+            </div>
+            <div class="card-metric manutencao">
+                <h3>🔧 Manutenção</h3>
+                <p id="total-manutencao">0</p>
+            </div>
+            <div class="card-metric inativo">
+                <h3>💤 Inativos</h3>
+                <p id="total-inativos">0</p>
+            </div>
+        </section>
 
+        <!-- SEÇÃO DO GRÁFICO DONUT -->
+        <section class="panel chart-panel">
+            <h3>📊 Taxa de Disponibilidade</h3>
+            <div class="chart-wrapper">
+                <div id="donut-chart" class="donut-chart">
+                    <div class="donut-hole">
+                        <span id="chart-percentage">0%</span>
+                    </div>
+                </div>
+                <div class="chart-legend">
+                    <p><span class="dot ativo"></span> Ativos Operacionais</p>
+                    <small>Equipamentos prontos para uso dos alunos</small>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- LAYOUT PRINCIPAL -->
     <main class="main-layout">
-        <!-- 📝 FORMULÁRIO DE CADASTRO / EDIÇÃO -->
+        <!-- FORMULÁRIO -->
         <section class="panel form-panel animate-fade">
             <h2 id="form-title"><span>✏️</span> Novo Registro</h2>
             <form id="form-inventario">
@@ -81,19 +102,36 @@
                     </div>
                 </div>
 
+                <!-- CAMPO DE OBSERVAÇÕES TÉCNICAS -->
+                <div class="field-group">
+                    <label for="observacoes">Observações Técnicas / Notas</label>
+                    <textarea id="observacoes" rows="2" placeholder="Ex: Falta a tecla 'Shift' ou Doação de 2026..."></textarea>
+                </div>
+
                 <button type="submit" id="btn-submit" class="btn-submit">Salvar no Sistema ✨</button>
                 <button type="button" id="btn-cancel-edit" class="btn-cancel" style="display: none;">Cancelar Edição 🎀</button>
             </form>
         </section>
 
-        <!-- 🔎 TABELA E FILTROS -->
+        <!-- TABELA E FILTROS -->
         <section class="panel table-panel animate-fade">
             <div class="table-header-actions">
                 <h2><span>📂</span> Itens Cadastrados</h2>
                 <div class="action-row">
-                    <input type="text" id="search-input" placeholder="🔍 Pesquisar por nome...">
-                    <button id="btn-export" class="btn-export" type="button" title="Exportar Planilha Excel/CSV">📥 Exportar</button>
+                    <input type="text" id="search-input" placeholder="🔍 Pesquisar por nome ou código...">
+                    <button id="btn-export" class="btn-export" type="button">📥 Exportar</button>
                 </div>
+            </div>
+
+            <!-- BARRA DE FILTROS AVANÇADOS -->
+            <div class="filter-pills-container">
+                <button class="pill-btn active" data-filter-type="all">Todos</button>
+                <button class="pill-btn" data-filter-type="cat-Computador">🖥️ Computadores</button>
+                <button class="pill-btn" data-filter-type="cat-Periférico">🖱️ Periféricos</button>
+                <button class="pill-btn" data-filter-type="cat-Rede">🌐 Redes</button>
+                <button class="pill-btn" data-filter-type="status-Ativo">✨ Ativos</button>
+                <button class="pill-btn" data-filter-type="status-Em Manutenção">🔧 Em Reparo</button>
+                <button class="pill-btn" data-filter-type="status-Inativo">💤 Desativado</button>
             </div>
 
             <div class="scrollable-table">
@@ -116,7 +154,7 @@
         </section>
     </main>
 
-    <!-- 📜 ABA DE HISTÓRICO / LOGS -->
+    <!-- HISTÓRICO DE LOGS -->
     <section class="panel logs-panel animate-fade">
         <h2><span>📜</span> Histórico de Atividades Recentes</h2>
         <ul id="log-list" class="log-list">
@@ -124,7 +162,7 @@
         </ul>
     </section>
 
-    <!-- 🪟 MODAL CUSTOMIZADO -->
+    <!-- MODAL CUSTOMIZADO -->
     <div id="custom-modal" class="modal-overlay">
         <div class="modal-card">
             <div class="modal-icon">🌸</div>
@@ -137,11 +175,12 @@
         </div>
     </div>
 
-    <!-- 🍞 RECIPIENTE DE NOTIFICAÇÕES (NOVO) -->
+    <!-- CONTAINER DE NOTIFICAÇÕES (TOASTS) -->
     <div id="toast-container" class="toast-container"></div>
 
     <script src="script.js"></script>
 </body>
 </html>
+
 
 
