@@ -1,10 +1,10 @@
+
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌸 Laboratório de Informática - Cute Inventory</title>
-    <!-- Fontes fofas e modernas do Google Fonts -->
+    <title>🌸 Laboratório de Informática - Cute Inventory v2</title>
     <link rel="preconnect" href="https://googleapis.com">
     <link rel="preconnect" href="https://gstatic.com" crossorigin>
     <link href="https://googleapis.com/css2?family=Fredoka:wght@300..700&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
@@ -15,14 +15,16 @@
     <header class="app-header">
         <div class="header-content">
             <span class="header-icon">🎒</span>
-            <div>
+            <div class="header-text">
                 <h1>Inventário do Laboratório</h1>
                 <p>Gerenciamento delicado de equipamentos e periféricos</p>
             </div>
         </div>
+        <!-- 🌓 BOTÃO DARK MODE -->
+        <button id="theme-toggle" class="btn-theme" title="Alternar Modo Escuro">✨ 🌙</button>
     </header>
 
-    <!-- 📊 CARDS DE ESTATÍSTICAS (NOVOS) -->
+    <!-- 📊 CARDS DE ESTATÍSTICAS -->
     <section class="metrics-container">
         <div class="card-metric total">
             <h3>💻 Total</h3>
@@ -43,10 +45,13 @@
     </section>
 
     <main class="main-layout">
-        <!-- 📝 FORMULÁRIO DE CADASTRO -->
+        <!-- 📝 FORMULÁRIO DE CADASTRO / EDIÇÃO -->
         <section class="panel form-panel">
-            <h2><span>✏️</span> Novo Registro</h2>
+            <h2 id="form-title"><span>✏️</span> Novo Registro</h2>
             <form id="form-inventario">
+                <!-- Campo Oculto para controlar se estamos EDITANDO um item -->
+                <input type="hidden" id="edit-id">
+
                 <div class="field-group">
                     <label for="nome">Nome do Equipamento</label>
                     <input type="text" id="nome" required placeholder="Ex: Teclado Mecânico Rosa">
@@ -79,16 +84,20 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn-submit">Salvar no Sistema ✨</button>
+                <button type="submit" id="btn-submit" class="btn-submit">Salvar no Sistema ✨</button>
+                <button type="button" id="btn-cancel-edit" class="btn-cancel" style="display: none;">Cancelar Edição 🎀</button>
             </form>
         </section>
 
-        <!-- 🔎 TABELA E BUSCA -->
+        <!-- 🔎 TABELA E FILTROS -->
         <section class="panel table-panel">
             <div class="table-header-actions">
                 <h2><span>📂</span> Itens Cadastrados</h2>
-                <!-- Barra de Pesquisa Avançada -->
-                <input type="text" id="search-input" placeholder="🔍 Pesquisar por nome ou código...">
+                <div class="action-row">
+                    <input type="text" id="search-input" placeholder="🔍 Pesquisar por nome ou código...">
+                    <!-- 📥 BOTÃO EXPORTAR -->
+                    <button id="btn-export" class="btn-export" title="Exportar Planilha Excel/CSV">📥 Exportar</button>
+                </div>
             </div>
 
             <div class="scrollable-table">
@@ -102,9 +111,7 @@
                             <th>Ações</th>
                         </tr>
                     </thead>
-                    <tbody id="lista-tabela">
-                        <!-- Gerado dinamicamente pelo JS -->
-                    </tbody>
+                    <tbody id="lista-tabela"></tbody>
                 </table>
                 <div id="empty-state" class="empty-state">
                     <p>🌸 Nenhum equipamento encontrado por aqui...</p>
@@ -112,6 +119,27 @@
             </div>
         </section>
     </main>
+
+    <!-- 📜 ABA DE HISTÓRICO / LOGS -->
+    <section class="panel logs-panel">
+        <h2><span>📜</span> Histórico de Atividades Recentes</h2>
+        <ul id="log-list" class="log-list">
+            <li class="empty-log">Nenhuma atividade registrada ainda... ✨</li>
+        </ul>
+    </section>
+
+    <!-- 🪟 MODAL CUSTOMIZADO (SUBSTITUTO DO CONFIRM FEIO) -->
+    <div id="custom-modal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-icon">🌸</div>
+            <h3 id="modal-title">Confirmar Ação</h3>
+            <p id="modal-message">Você tem certeza que deseja fazer isso?</p>
+            <div class="modal-buttons">
+                <button id="modal-btn-confirm" class="btn-modal-confirm">Sim, tenho! ✨</button>
+                <button id="modal-btn-cancel" class="btn-modal-cancel">Cancelar 🎀</button>
+            </div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
